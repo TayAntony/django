@@ -27,10 +27,6 @@ class Produtos (models.Model):
         return self.nome
 
 class Clientes(models.Model):
-    CLIENTE_FREE = 'F'
-    CLIENTE_PREMIUM = 'P'
-    CLIENTE_MASTER = 'M'
-
     TIPOS_CLIENTES = [
         ('F', 'Free'),
         ('P', 'Premium'),
