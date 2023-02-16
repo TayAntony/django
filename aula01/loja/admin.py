@@ -1,6 +1,7 @@
 from django.contrib import admin, messages
 from . import models
 from django.contrib.admin import ModelAdmin, SimpleListFilter
+from django.db.models import QuerySet
 
 admin.site.register(models.Categorias)
 
@@ -14,11 +15,11 @@ class EstoqueFiltro(admin.SimpleListFilter):
             ("Estoque baixo", "Estoque baixo"),
             ("Estoque OK", "Estoque OK"),
             ("Estoque alto", "Estoque alto")
-
         ]
 
-    def queryset(self, request, queryset):
+    def queryset(self, request, queryset: QuerySet):
         if self.value() == "Estoque zerado":
+            #SELECT * FROM QTD_ESTOQUE WHERE QTD_ESTOQUE == 0
             return queryset.filter(
                 qtd_estoque=0
             )

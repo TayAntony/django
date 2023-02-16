@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Categorias(models.Model):
     nome_modelo = models.CharField(max_length=255, unique=True)
@@ -12,8 +13,8 @@ class Categorias(models.Model):
 
 class Produtos (models.Model):
     nome = models.CharField(max_length=255)
-    preco = models.DecimalField(max_digits=6, decimal_places=2)
-    qtd_estoque = models.IntegerField()
+    preco = models.DecimalField(max_digits=6, decimal_places=2, validators=[MinValueValidator (1, message='O preço deve ser igual ou maior que 1 real')])
+    qtd_estoque = models.IntegerField(validators=[MinValueValidator (1, message='A quantidade no estoque deve ser maior ou igual a 0'), MaxValueValidator(1000, message='Valor máximo excedido!')])
     descricao = models.TextField()
     validade = models.DateField()
     disponibilidade = models.BooleanField()
