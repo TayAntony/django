@@ -20,3 +20,11 @@ class VendasAdmin(admin.ModelAdmin):
 @admin.register(models.Pedidos)
 class PedidosAdmin(admin.ModelAdmin):
     list_display = ['produto_fk', 'preco_atual', 'quantidade']
+
+class VendasInline(admin.TabularInline):
+    model = VendasAdmin
+
+class PedidosInline(admin.ModelAdmin):
+    inlines = [
+        VendasInline
+    ]
