@@ -1,30 +1,37 @@
 from django.contrib import admin
 from . import models
+import decimal
 
-# Register your models here.
+#TODO DIMINUIR O ESTOQUE E IMPEDIR COMPRA SE NÃO TIVER ESTOQUE SUFICIENTE
+#TODO NAO DEIXAR O CAMPO PREÇO TOTAL EDITÁVEL NOS PEDIDOS (E MOSTRAR A CONTA DO PREÇO TOTAL DA COMPRA)
 
 admin.site.register(models.Categorias)
-
-@admin.register(models.Produtos)
-class ProdutoAdmin(admin.ModelAdmin):
-    list_display= ['nome', 'preco', 'qtd_estoque']
 
 @admin.register(models.Clientes)
 class ClienteAdmin (admin.ModelAdmin):
     list_display = ['id', 'nome']
 
-@admin.register(models.Vendas)
-class VendasAdmin(admin.ModelAdmin):
-    list_display = ['estado_pagamento', 'data_venda']
+@admin.register(models.Produtos)
+class ProdutoAdmin(admin.ModelAdmin):
+    list_display= ['id','nome', 'preco', 'qtd_estoque', 'disponibilidade']
 
-@admin.register(models.Pedidos)
-class PedidosAdmin(admin.ModelAdmin):
-    list_display = ['produto_fk', 'preco_atual', 'quantidade']
 
-class VendasInline(admin.TabularInline):
-    model = VendasAdmin
+class PedidoItemInline(admin.TabularInline):
+    model = models.ItemPedido
+    readonly_fields = ['preco_atual', 'total_pagamento']
 
-class PedidosInline(admin.ModelAdmin):
+@admin.register(models.PedidoCompleto)
+class PedidoAdmin(admin.ModelAdmin):
+    list_display = ['id', 'estado_pagamento', 'estado_pedido','data_venda', 'preco_total', 'cliente']
     inlines = [
-        VendasInline
+       PedidoItemInline
     ]
+
+    def save_formset(self, request, form, formset, change) -> None:
+        instances = formset.save(commit=False)
+        for instance in instances:
+            instance.preco_atual = instance.produto.preco
+            instance.total_pagamento = instance.quantidade * instance.preco_atual
+            instance.save()
+
+        return super().save_formset(request, form, formset, change)
