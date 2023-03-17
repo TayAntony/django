@@ -19,7 +19,7 @@ class ProdutosSerializer(serializers.ModelSerializer):
 class PedidoCompletoSerializer(serializers.ModelSerializer):
     class Meta:
         model= PedidoCompleto
-        fields = ['nome', 'preco', 'qtd_estoque', 'descricao', 'disponibilidade', 'categoria_prod']
+        fields = ['id', 'estado_pagamento', 'estado_pedido','data_venda', 'preco_total', 'cliente']
 
 class ItemPedidoSerializer(serializers.ModelSerializer):
     class Meta:
