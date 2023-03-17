@@ -1,0 +1,16 @@
+ansicon==1.89.0
+asgiref==3.6.0
+bcrypt==4.0.1
+blessed==1.19.1
+Django==4.1.6
+inquirer==3.1.2
+jinxed==1.2.0
+PyQt5==5.15.7
+PyQt5-Qt5==5.15.2
+PyQt5-sip==12.11.0
+python-editor==1.0.4
+readchar==4.0.3
+six==1.16.0
+sqlparse==0.4.3
+tzdata==2022.7
+wcwidth==0.2.6
