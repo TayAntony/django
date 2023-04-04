@@ -14,9 +14,9 @@ class Produtos(models.Model):
     disponibilidade = models.BooleanField(default=True)
     foto = models.ImageField(upload_to="produtos")
     categoria = models.ForeignKey(Categorias, on_delete=models.CASCADE)
-
+    num_parcelas = models.PositiveIntegerField(default=True)
+    revendedora = models.CharField(max_length=50, default='Magazine')
     
-
     #SELECT * FROM PRODUTOS INNER JOIN CATEGORIAS
     #ON PRODUTOS.IDCATEGORIA = CATEGORIAS.ID
     #10 - Coca Cola - 5.00 - 10 - Refrigerante - 3
