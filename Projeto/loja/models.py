@@ -15,7 +15,8 @@ class Produtos(models.Model):
     foto = models.ImageField(upload_to="produtos")
     categoria = models.ForeignKey(Categorias, on_delete=models.CASCADE)
     num_parcelas = models.PositiveIntegerField(default=True)
-    revendedora = models.CharField(max_length=50, default='Magazine')
+    vendedora = models.CharField(max_length=50, default='Magazine')
+    
     
     #SELECT * FROM PRODUTOS INNER JOIN CATEGORIAS
     #ON PRODUTOS.IDCATEGORIA = CATEGORIAS.ID
@@ -28,6 +29,8 @@ class Produtos(models.Model):
 
 
 class Clientes(models.Model):
+    avaliacao = models.ForeignKey(Produtos, on_delete=models.PROTECT, default='5')
+    foto = models.ImageField(upload_to="cliente", default='foto.png')
     nome = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     data_nascimento = models.DateField()
@@ -94,3 +97,9 @@ class PedidosItens(models.Model):
     preco = models.DecimalField(max_digits=6, decimal_places=2)
     preco_total = models.DecimalField(max_digits=10, decimal_places=2)
     pedido = models.ForeignKey(Pedidos, on_delete=models.CASCADE )
+
+class Comentario(models.Model):
+    avaliacao_produto = models.ForeignKey(Produtos, on_delete=models.PROTECT, default='5')
+    cliente = models.ForeignKey(Clientes, on_delete=models.PROTECT )
+    titulo_comentario = models.CharField(max_length=20)
+    comentario = models.TextField()
