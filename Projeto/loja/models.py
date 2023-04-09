@@ -6,6 +6,13 @@ class Categorias(models.Model):
     def __str__(self) -> str:
         return self.nome
 
+class Cor(models.Model):
+    nome = models.CharField(max_length=50)
+    codigo_hex = models.CharField(max_length=8)
+
+    def __str__(self) -> str:
+        return self.nome
+
 class Produtos(models.Model):
     nome = models.CharField(max_length=100)
     descricao = models.TextField()
@@ -16,8 +23,8 @@ class Produtos(models.Model):
     categoria = models.ForeignKey(Categorias, on_delete=models.CASCADE)
     num_parcelas = models.PositiveIntegerField(default=True)
     vendedora = models.CharField(max_length=50, default='Magazine')
-    
-    
+
+    cores = models.ManyToManyField(Cor)
     #SELECT * FROM PRODUTOS INNER JOIN CATEGORIAS
     #ON PRODUTOS.IDCATEGORIA = CATEGORIAS.ID
     #10 - Coca Cola - 5.00 - 10 - Refrigerante - 3
