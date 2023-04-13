@@ -6,5 +6,8 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('loja/', include('loja.urls'))
+    path('loja/', include('loja.urls')),
+    path(r'auth/', include('djoser.urls')),
+    path (r'auth/', include('djoser.urls.jwt')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
